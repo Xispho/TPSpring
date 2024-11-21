@@ -15,4 +15,9 @@ public class Tp1Application {
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
         return String.format("Hello %s!", name);
     }
+
+    @GetMapping("/bonjour")
+    public String bonjour(@RequestParam(value = "name", defaultValue = "tout le monde") String name) {
+        return String.format("Bonjour %s!", name);
+    }
 }
