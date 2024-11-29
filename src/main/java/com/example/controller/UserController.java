@@ -4,11 +4,7 @@ import com.example.repository.UserRepository;
 import com.example.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path="/user")
@@ -17,17 +13,15 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping(path="/add")
-    public @ResponseBody String addNewUser (@RequestParam String name,
-                                            @RequestParam String password,
-                                            @RequestParam String role) {
-
-
-        User user = new User();
-        user.setName(name);
-        user.setPassword(password);
-        user.setRole(role);
+    public @ResponseBody String addUser (@RequestBody User user) {
         userRepository.save(user);
-        return "Saved";
+        return "User created";
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public @ResponseBody String deleteUser (@PathVariable int id) {
+        userRepository.deleteById(id);
+        return "User deleted";
     }
 
     @GetMapping(path="/all")
