@@ -24,6 +24,11 @@ public class UserController {
         return "User deleted";
     }
 
+    @GetMapping(path="/{id}")
+    public @ResponseBody User getUser (@PathVariable int id) {
+        return userRepository.findById(id).get();
+    }
+
     @GetMapping(path="/all")
     public @ResponseBody Iterable<User> getAllUsers() {
         return userRepository.findAll();
