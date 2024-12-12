@@ -1,6 +1,8 @@
 package com.example.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 
@@ -11,38 +13,15 @@ public class User {
     @Column(name = "userId")
     private Integer id;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Collection<Liked> likes;
-
+    @Getter
+    @Setter
     private String name;
+
+    @Getter
+    @Setter
     private String password;
+
+    @Getter
+    @Setter
     private String role;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

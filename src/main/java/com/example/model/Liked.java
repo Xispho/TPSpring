@@ -1,6 +1,8 @@
 package com.example.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Liked {
@@ -8,30 +10,19 @@ public class Liked {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
+    @Getter
+    @OneToOne
     @JoinColumn(name = "articleId")
     private Article article;
 
-    @ManyToOne
+    @Getter
+    @OneToOne
     @JoinColumn(name = "userId")
     private User user;
 
     // 1 si like, 0 si dislike
+    @Getter
+    @Setter
     private Boolean liked;
 
-    public Article getArticle() {
-        return article;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Boolean getLike() {
-        return liked;
-    }
-
-    public void setLike(Boolean liked) {
-        this.liked = liked;
-    }
 }
