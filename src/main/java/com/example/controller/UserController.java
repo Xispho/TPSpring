@@ -12,7 +12,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path="/add")
+    @PostMapping(path="")
     public @ResponseBody String addUser (@RequestBody User user) {
         userRepository.save(user);
         return "User created";
