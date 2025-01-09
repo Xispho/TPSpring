@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path="/liked")
@@ -79,14 +80,19 @@ public class LikedController {
     }
 
     @GetMapping(path="/{articleId}/users")
-    public @ResponseBody Iterable<Map<String, String>> getUsersByArticle (@PathVariable int articleId) {
+    public @ResponseBody Iterable<Map<String, String>> getUsersByArticle (@PathVariable int articleId, @RequestParam Optional<Boolean> likedStatus) {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new RuntimeException("Article not found"));
 
-        return likedRepository.findByArticle(article).stream().map(liked -> {
-            User user = liked.getUser();
-            String userLiked = liked.getLiked() ? "like" : "dislike";
-            return Map.of("userName", user.getName(), "liked", userLiked);
-        })::iterator;
+        boolean likedStatusValue = likedStatus.orElse(false);
+
+        return likedRepository.findByArticle(article)
+                .stream()
+                .filter(liked -> (liked.getLiked() == likedStatusValue) || likedStatus.isEmpty())
+                .map(liked -> {
+                    User user = liked.getUser();
+                    String userLiked = liked.getLiked() ? "like" : "dislike";
+                    return Map.of("userName : ", user.getName(), "likedStatus :", userLiked);
+                })::iterator;
     }
 
     @GetMapping(path="/{articleId}/likes")
