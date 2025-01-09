@@ -65,6 +65,19 @@ public class LikedController {
         }
     }
 
+    @GetMapping(path="/{articleId}/{userId}")
+    public @ResponseBody String getLikedStatusByArticleAndUser (@PathVariable int articleId, @PathVariable int userId) {
+        Article article = articleRepository.findById(articleId).orElseThrow(() -> new RuntimeException("Article not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        Liked existingLiked = likedRepository.findByArticleAndUser(article, user);
+        if (existingLiked != null) {
+            String likedStatus = existingLiked.getLiked() ? "liked" : "disliked";
+            return user.getName() + " has " + likedStatus + " this article";
+        }
+        return user.getName() + " has not liked or disliked this article";
+    }
+
     @GetMapping(path="/{articleId}/users")
     public @ResponseBody Iterable<Map<String, String>> getUsersByArticle (@PathVariable int articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new RuntimeException("Article not found"));
