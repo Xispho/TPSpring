@@ -25,4 +25,13 @@ public class Liked {
     @Setter
     private Boolean liked;
 
+    public Liked(Article article, User user, boolean liked) {
+        this.article = article;
+        this.user = user;
+        this.liked = liked;
+    }
+
+    public Liked() {
+
+    }
 }
