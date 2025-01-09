@@ -95,14 +95,14 @@ public class LikedController {
                 })::iterator;
     }
 
-    @GetMapping(path="/{articleId}/likes")
+    @GetMapping(path="/{articleId}/countLikes")
     public @ResponseBody int getLikeCountByArticle (@PathVariable int articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new RuntimeException("Article not found"));
 
         return likedRepository.countByArticleAndLiked(article, true);
     }
 
-    @GetMapping(path="/{articleId}/dislikes")
+    @GetMapping(path="/{articleId}/countDislikes")
     public @ResponseBody int getDislikeCountByArticle (@PathVariable int articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new RuntimeException("Article not found"));
 
